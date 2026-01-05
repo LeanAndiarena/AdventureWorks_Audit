@@ -1,0 +1,8 @@
+pandas
+numpy
+sqlalchemy
+pyodbc
+python-dotenv
+rapidfuzz
+jinja2
+weasyprint
