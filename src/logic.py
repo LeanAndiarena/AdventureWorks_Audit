@@ -1,6 +1,6 @@
 import pandas as pd
 from rapidfuzz import process, fuzz
-from db import get_customers
+from src.db import get_customers
 
 def find_duplicates(df_new, df_db):
     

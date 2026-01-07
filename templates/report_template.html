@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Reporte de Auditoría</title>
+    <style>
+        body { font-family: sans-serif; }
+        h1 { color: #2c3e50; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .alerta { color: red; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>🔎 Reporte de Duplicados Detectados</h1>
+    <p>Fecha de ejecución: {{ fecha_hoy }}</p>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Lead (Input)</th>
+                <th>Coincidencia en DB</th>
+                <th>Score</th>
+                <th>ID Real</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for fila in datos %}
+            <tr>
+                <td>{{ fila.Nombre_Input }}</td>
+                <td>{{ fila.Coincidencia_DB }}</td>
+                <td>
+                    {{ fila.Score }}%
+                </td>
+                <td>{{ fila.ID_AdventureWorks }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
