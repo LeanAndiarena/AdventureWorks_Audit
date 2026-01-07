@@ -4,6 +4,8 @@ from email.message import EmailMessage
 import ssl
 import smtplib
 import mimetypes
+import logging
+
 
 def send_email_report(pdf_path):
     # Cargamos las variables del correo- Keys
@@ -54,12 +56,10 @@ def send_email_report(pdf_path):
                 filename = os.path.basename(adj)
                 
             )
-        print(f"📎 Archivo '{adj}' adjuntado correctamente.")
+        logging.info(f"📎 Archivo '{adj}' adjuntado correctamente.")
 
-    except FileNotFoundError:
-        print(f"⚠️ ALERTA: No se encontró el archivo '{adj}'. El correo se enviará sin adjunto.")
     except Exception as e:
-        print(f"❌ Error al adjuntar archivo: {e}")
+        logging.error(f"❌ Error al adjuntar archivo: {e}")
         
     #------------------------------------------------------------------------------
 
@@ -71,8 +71,8 @@ def send_email_report(pdf_path):
         with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as smtp:
             smtp.login(email_sender, password)
             smtp.send_message(em) # Método más moderno y limpio
-            print("✅ Correo enviado exitosamente.")
+            logging.info("✅ Correo enviado exitosamente.")
             return True
     except Exception as e:
-        print(f"❌ Error al enviar el correo: {e}")
+        logging.error(f"❌ Error al enviar el correo: {e}")
         return False

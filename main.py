@@ -4,6 +4,26 @@ from src.db import get_customers
 from src.logic import find_duplicates
 from src.reporter import generate_pdf_report
 from src.email_sender import send_email_report
+import logging
+
+#configuracion de logging
+
+logging.basicConfig(
+    filename= 'registro_ejecucion.log',
+    level= logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S'
+    
+)
+
+# --- 🆕 EL SILENCIADOR ---
+# Le decimos a las librerías externas: "Solo hablen si es una EMERGENCIA (WARNING o ERROR)"
+logging.getLogger('fontTools.subset').setLevel(logging.WARNING)
+logging.getLogger('fontTools.ttLib').setLevel(logging.WARNING)
+logging.getLogger('fontTools').setLevel(logging.WARNING)
+logging.getLogger('weasyprint').setLevel(logging.WARNING)
+logging.getLogger('PIL').setLevel(logging.WARNING)
+# -------------------------
 
 if __name__ == "__main__":
     

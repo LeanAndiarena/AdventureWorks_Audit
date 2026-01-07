@@ -1,44 +1,53 @@
 import pandas as pd
 from rapidfuzz import process, fuzz
 from src.db import get_customers
+import logging
 
 def find_duplicates(df_new, df_db):
     
-    df_name =  df_db['FullName'].tolist()
-    
-    list = []
-    
-    for i, row in df_new.iterrows():
+    try:
         
-        nombre_sucio = row['Nombre_Sucio']
+        df_name =  df_db['FullName'].tolist()
         
-        resultado = process.extractOne(
-            query= nombre_sucio,
-            choices= df_name,
-            scorer= fuzz.WRatio
-        )
+        list = []
         
-        # Desempaquetamos la tupla (Nombre, Score, Indice)
-        nombre_encontrado = resultado[0]
-        score = resultado[1]
-        indice_en_db = resultado[2]       
-        
-        if score > 85:
+        for i, row in df_new.iterrows():
             
-            # Aquí está el truco: Usamos el índice para buscar el ID original
-            # .iloc es para buscar por posición (índice numérico)
-            id_real = df_db.iloc[indice_en_db]['BusinessEntityID']
+            nombre_sucio = row['Nombre_Sucio']
             
-            # Guardamos el hallazgo en nuestra lista
-            list.append({
-                'Nombre_Input': nombre_sucio,
-                'Coincidencia_DB': nombre_encontrado,
-                'Score': round(score, 2),
-                'ID_AdventureWorks': id_real
-            })            
+            resultado = process.extractOne(
+                query= nombre_sucio,
+                choices= df_name,
+                scorer= fuzz.WRatio
+            )
+            
+            # Desempaquetamos la tupla (Nombre, Score, Indice)
+            nombre_encontrado = resultado[0]
+            score = resultado[1]
+            indice_en_db = resultado[2]       
+            
+            if score > 85:
+                
+                # Aquí está el truco: Usamos el índice para buscar el ID original
+                # .iloc es para buscar por posición (índice numérico)
+                id_real = df_db.iloc[indice_en_db]['BusinessEntityID']
+                
+                # Guardamos el hallazgo en nuestra lista
+                list.append({
+                    'Nombre_Input': nombre_sucio,
+                    'Coincidencia_DB': nombre_encontrado,
+                    'Score': round(score, 2),
+                    'ID_AdventureWorks': id_real
+                })            
+        
+        logging.info(f"Resultado exitoso. Se obtuvieron {len(list)} registros.")
+        # 5. Devolvemos la lista convertida en DataFrame (bonito para leer)
+        return pd.DataFrame(list)
     
-    # 5. Devolvemos la lista convertida en DataFrame (bonito para leer)
-    return pd.DataFrame(list)
+    
+    except Exception as e:
+        
+        logging.error(f"❌ Error crítico en logic.py: {e}")
     
 
 if __name__ == '__main__':
