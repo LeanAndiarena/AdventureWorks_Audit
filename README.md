@@ -1,5 +1,3 @@
-### 📋 Texto para copiar y pegar en `README.md`
-
 
 # 🚴 AdventureWorks Lead Auditor
 
