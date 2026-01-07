@@ -1,0 +1,8 @@
+﻿ID_Lead;Nombre_Sucio;Email;Notas
+101;Ken Sanchez;ken.sanchez@mirar.com;(Error: 's' por 'z')
+102;Catherine Abel;terri.duffy@hotmail.com;(Error: 'y' por 'i' + Middle Name)
+103;Roberto Tamburelo;rob.tamburello@gmail.com;(Error: falta una 'l')
+104;Gabriele Adams;rob@walters.com;(Variante: Robert vs Rob)
+105;Gail  Erickson;gail_e@adventure-works.com;(Variante: Inicial agregada)
+106;Leandro Andi;leandro@fav.com;(NUEVO: No debería matchear)
+107;Jesse Adams;leo@afa.org.ar;(NUEVO: No debería matchear)
